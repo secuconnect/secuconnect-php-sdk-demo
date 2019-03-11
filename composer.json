@@ -1,0 +1,17 @@
+{
+    "name": "secuconnect/secuconnect-php-sdk-demo",
+    "type": "project",
+    "license": "Apache-2.0",
+
+    "require": {
+        "secuconnect/secuconnect-php-sdk": "^0.5",
+        "ext-json": "*",
+        "ext-curl": "*"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Secuconnect\\Demo\\": "src/"
+        }
+    }
+}
