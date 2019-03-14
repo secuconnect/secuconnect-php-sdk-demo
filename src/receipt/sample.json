@@ -1,0 +1,168 @@
+{
+  "body":[
+    {
+      "value":{
+        "caption":"Unbekannt"
+      },
+      "type":"separator"
+    },
+    {
+      "type":"space"
+    },
+    {
+      "value":{
+        "decoration":[
+
+        ],
+        "name":"Terminal-ID:",
+        "value":"100896"
+      },
+      "type":"name-value"
+    },
+    {
+      "value":{
+        "decoration":[
+
+        ],
+        "name":"Datum:",
+        "value":"17.10.2018 10:42:11"
+      },
+      "type":"name-value"
+    },
+    {
+      "value":{
+        "text":"STORNO",
+        "decoration":[
+          "important",
+          "align-center"
+        ]
+      },
+      "type":"textline"
+    },
+    {
+      "type":"space"
+    },
+    {
+      "type":"space"
+    },
+    {
+      "value":{
+        "text":"TA Code:",
+        "decoration":[
+
+        ]
+      },
+      "type":"textline"
+    },
+    {
+      "value":{
+        "text":"13098163",
+        "decoration":[
+
+        ]
+      },
+      "type":"textline"
+    },
+    {
+      "value":{
+        "text":"Datum:",
+        "decoration":[
+
+        ]
+      },
+      "type":"textline"
+    },
+    {
+      "value":{
+        "text":"17.10.2018 10:42:03",
+        "decoration":[
+
+        ]
+      },
+      "type":"textline"
+    },
+    {
+      "type":"space"
+    },
+    {
+      "value":{
+        "text":"Stornierter Betrag:",
+        "decoration":[
+
+        ]
+      },
+      "type":"textline"
+    },
+    {
+      "value":{
+        "text":"1,00 EUR",
+        "decoration":[
+
+        ]
+      },
+      "type":"textline"
+    },
+    {
+      "type":"space"
+    },
+    {
+      "value":{
+        "text":"Stornierte Punkte:",
+        "decoration":[
+
+        ]
+      },
+      "type":"textline"
+    },
+    {
+      "type":"space"
+    },
+    {
+      "type":"space"
+    },
+    {
+      "value":{
+        "text":"Aktuelles Guthaben:",
+        "decoration":[
+
+        ]
+      },
+      "type":"textline"
+    },
+    {
+      "value":{
+        "text":"124,00 EUR",
+        "decoration":[
+          "important"
+        ]
+      },
+      "type":"textline"
+    },
+    {
+      "type":"space"
+    },
+    {
+      "value":{
+        "text":"Aktuelle Punkte:",
+        "decoration":[
+
+        ]
+      },
+      "type":"textline"
+    },
+    {
+      "value":{
+        "text":"0",
+        "decoration":[
+          "important"
+        ]
+      },
+      "type":"textline"
+    }
+  ],
+  "header":[
+    {
+      "type":"space"
+    }
+  ]
+}

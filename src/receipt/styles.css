@@ -1,0 +1,52 @@
+.align-center {
+    text-align: center !important;
+}
+
+.align-right {
+    text-align: right !important;
+}
+
+*, :after, :before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.col-md-6, .col-md-12 {
+    position: relative;
+    min-height: 1px;
+    padding-left: 12px;
+    padding-right: 12px;
+    float: left;
+}
+
+.col-md-6 {
+    width: 50%;
+}
+
+.col-md-12 {
+    width: 100%;
+}
+
+.row:after, .row:before {
+    content: " ";
+    display: table;
+}
+
+.row:after {
+    clear: both;
+}
+
+.receipt {
+    background-color: #f2f5f9;
+    width: 350px;
+}
+
+.receipt .separator {
+    font-weight: bolder;
+    font-size: larger;
+}
+
+.receipt .name-value.important, .receipt .textline.important {
+    font-weight: bolder;
+}
