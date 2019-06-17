@@ -2,7 +2,7 @@
 
 namespace Secuconnect\Demo;
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../../../vendor/autoload.php';
 
 use Secuconnect\Client\ApiException;
 use Secuconnect\Client\Authentication\Authenticator;
