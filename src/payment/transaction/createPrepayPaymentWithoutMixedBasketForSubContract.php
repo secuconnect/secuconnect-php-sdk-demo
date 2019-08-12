@@ -31,6 +31,9 @@ try {
 
     $transaction->setRedirectUrl(new SecupayRedirectUrl());
 
+    // See src/payment/contract/createMerchantWithIdentification.php for details
+    $transaction->setContract('PCR_XJH365T7S2N630M7T3H58CF8HF9AAH');
+
     // See src/payment/customer/createCustomer.php for details
     $transaction->setCustomer(new PaymentCustomersProductModel([
         'id' => 'PCU_3R3SSQEF22N6UGGZ70ZAV938Z8UKAW'
