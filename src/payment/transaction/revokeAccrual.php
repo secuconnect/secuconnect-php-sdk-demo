@@ -8,11 +8,8 @@ use Exception;
 use Secuconnect\Client\Api\PaymentSecupayPrepaysApi;
 use Secuconnect\Client\ApiException;
 use Secuconnect\Client\Authentication\Authenticator;
-use Secuconnect\Client\Model\PaymentCustomersProductModel;
-use Secuconnect\Client\Model\SecupayBasketItem;
-use Secuconnect\Client\Model\SecupayRedirectUrl;
-use Secuconnect\Client\Model\SecupayTransactionProductDTO;
-use Secuconnect\Client\Model\SecupayTransactionProductDTOOptData;
+use Secuconnect\Client\Configuration;
+use Secuconnect\Client\Model\SecupayTransactionReverseAccrualDTO;
 
 try {
     Authenticator::authenticateByClientCredentials(
@@ -20,45 +17,12 @@ try {
         '...'
     );
 
-    $transaction = new SecupayTransactionProductDTO();
-    $transaction->setOptData(new SecupayTransactionProductDTOOptData());
-    $transaction->getOptData()->setLanguage('de_DE'); // or 'en_US'
-
-    $transaction->setAmount(3324); // in euro-cent
-    $transaction->setCurrency('EUR');
-    $transaction->setDemo(true);
-    $transaction->setAccrual(true);
-
-    $transaction->setRedirectUrl(new SecupayRedirectUrl());
-
-    // See src/payment/customer/createCustomer.php for details
-    $transaction->setCustomer(new PaymentCustomersProductModel([
-        'id' => 'PCU_3092RR0DB2NBEE6FN0ZAVFYEJZEYAW'
-    ]));
-
-    $basketItem1 = new SecupayBasketItem();
-    $basketItem1->setItemType('shipping');
-    $basketItem1->setName('standard delivery');
-    $basketItem1->setTax(19);
-    $basketItem1->setTotal(1324);
-
-    $basketItem2 = new SecupayBasketItem();
-    $basketItem2->setItemType('article');
-    $basketItem2->setArticleNumber(3211);
-    $basketItem2->setQuantity(2);
-    $basketItem2->setName('Fancy Item XYZ');
-    $basketItem2->setEan(4123412341243);
-    $basketItem2->setTax(19);
-    $basketItem2->setTotal(2000);
-    $basketItem2->setPrice(1000);
-
-    $transaction->setBasket([
-        $basketItem1,
-        $basketItem2
-    ]);
-
     $api_instance = new PaymentSecupayPrepaysApi();
-    $response = $api_instance->paymentSecupayprepaysPost($transaction);
+    $response = $api_instance->reverseAccrualByPaymentId(
+        'secupayprepays', // Payment method (secupaydebits, secupayprepays, secupayinvoices, ...) (required)
+        'igwibrzranbq3476703', // Payment id (required)
+        new SecupayTransactionReverseAccrualDTO()
+    );
 
     print_r($response);
     /*
@@ -100,7 +64,7 @@ try {
      *                         )
      *                 )
      *             [transaction_status] => 25
-     *             [accrual] => 1
+     *             [accrual] => 
      *             [payment_action] => sale
      *             [transfer_purpose] => TA 14249815
      *             [transfer_account] => Secuconnect\Client\Model\PaymentInformation Object

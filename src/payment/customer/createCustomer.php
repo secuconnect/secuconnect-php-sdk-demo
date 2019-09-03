@@ -48,6 +48,54 @@ try {
     $response = $api_instance->paymentCustomersPost($customer);
 
     print_r($response);
+    /*
+     * Secuconnect\Client\Model\PaymentCustomersProductModel Object
+     * (
+     *     [container:protected] => Array
+     *         (
+     *             [object] => payment.customers
+     *             [id] => PCU_3092RR0DB2NBEE6FN0ZAVFYEJZEYAW
+     *             [contract] => Secuconnect\Client\Model\ProductInstanceUID Object
+     *                 (
+     *                     [container:protected] => Array
+     *                         (
+     *                             [object] => payment.contracts
+     *                             [id] => PCR_...
+     *                         )
+     *                 )
+     *             [contact] => Secuconnect\Client\Model\Contact Object
+     *                 (
+     *                     [container:protected] => Array
+     *                         (
+     *                             [forename] => John
+     *                             [surname] => Doe
+     *                             [companyname] => Example Inc.
+     *                             [salutation] => Mr.
+     *                             [gender] => m
+     *                             [title] => Dr.
+     *                             [email] => example123@example.com
+     *                             [phone] => 0049-123-456789
+     *                             [dob] => 1901-02-03T00:00:00+01:00
+     *                             [url_website] => example.com
+     *                             [birthplace] => AnotherExampleCity
+     *                             [nationality] => german
+     *                             [address] => Secuconnect\Client\Model\Address Object
+     *                                 (
+     *                                     [container:protected] => Array
+     *                                         (
+     *                                             [street] => example street
+     *                                             [street_number] => 6a
+     *                                             [city] => Testcity
+     *                                             [postal_code] => 01234
+     *                                             [country] => DE
+     *                                         )
+     *                                 )
+     *                         )
+     *                 )
+     *             [created] => 2019-09-03T15:58:55+02:00
+     *         )
+     * )
+     */
 
 } catch (ApiException $e) {
     echo $e->getTraceAsString();
