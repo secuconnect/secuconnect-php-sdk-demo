@@ -31,8 +31,8 @@ try {
      */
 
 } catch (ApiException $e) {
-
-    var_dump($e->getResponseBody());
+    echo $e->getTraceAsString();
+    print_r($e->getResponseBody());
 
     $supportId = '';
     if (isset($e->getResponseBody()->supportId)) {

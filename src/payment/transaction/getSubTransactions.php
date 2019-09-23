@@ -6,7 +6,6 @@ require __DIR__ . '/../../../vendor/autoload.php';
 
 use Secuconnect\Client\ApiException;
 use Secuconnect\Client\Authentication\Authenticator;
-use Secuconnect\Client\Configuration;
 
 try {
     Authenticator::authenticateByClientCredentials(
@@ -149,8 +148,8 @@ try {
     }
 
 } catch (ApiException $e) {
-
-    var_dump($e->getResponseBody());
+    echo $e->getTraceAsString();
+    print_r($e->getResponseBody());
 
     $supportId = '';
     if (isset($e->getResponseBody()->supportId)) {
