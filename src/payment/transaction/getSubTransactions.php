@@ -9,9 +9,6 @@ use Secuconnect\Client\Authentication\Authenticator;
 use Secuconnect\Client\Configuration;
 
 try {
-    Configuration::getDefaultConfiguration()->setHost('https://connect-testing.secupay-ag.de/api/v2');
-    Configuration::getDefaultConfiguration()->setAuthHost('https://connect-testing.secupay-ag.de/');
-
     Authenticator::authenticateByClientCredentials(
         '...',
         '...'
