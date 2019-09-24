@@ -38,6 +38,7 @@ try {
 
     $subTransactionForSubContract = new SecupayBasketItem();
     $subTransactionForSubContract->setItemType('sub_transaction');
+    $subTransactionForSubContract->setName('Order 123');
     $subTransactionForSubContract->setContractId('PCR_XJH365T7S2N630M7T3H58CF8HF9AAH'); // See src/payment/contract/create* for details
     $subTransactionForSubContract->setTotal(3324);
 
