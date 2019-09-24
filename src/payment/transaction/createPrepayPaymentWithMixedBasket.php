@@ -52,7 +52,7 @@ try {
     $basketItem2->setArticleNumber(3211);
     $basketItem2->setQuantity(2);
     $basketItem2->setName('Fancy Item XYZ');
-    $basketItem2->setEan(4123412341243);
+    $basketItem2->setEan("4123412341243");
     $basketItem2->setTax(19);
     $basketItem2->setTotal(2000);
     $basketItem2->setPrice(1000);
