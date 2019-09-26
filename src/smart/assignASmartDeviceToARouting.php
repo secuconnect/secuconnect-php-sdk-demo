@@ -5,9 +5,12 @@ namespace Secuconnect\Demo;
 require __DIR__ . '/../../vendor/autoload.php';
 
 use Secuconnect\Client\Api\SmartDevicesApi;
+use Secuconnect\Client\Api\SmartRoutingsApi;
 use Secuconnect\Client\ApiException;
 use Secuconnect\Client\Authentication\Authenticator;
+use Secuconnect\Client\Configuration;
 use Secuconnect\Client\Model\SmartDevicesDTO;
+use Secuconnect\Client\Model\SmartRoutingsDTO;
 
 try {
 
@@ -22,19 +25,14 @@ try {
         '...',
     ]);
 
-    $api_instance = new SmartDevicesApi();
+    $api_instance = new SmartRoutingsApi();
     var_dump('Access-Token: ' . $api_instance->getApiClient()->getConfig()->getAccessToken());
 
-    $smartDeviceDTO = new SmartDevicesDTO();
-    $smartDeviceDTO->setMerchant("MRC_...");
-    $smartDeviceDTO->setStore("STO_...");
-    $smartDeviceDTO->setContract("GCR_...");
-    $smartDeviceDTO->setType("cashier");
-    $smartDeviceDTO->setVendor("...");
-    $smartDeviceDTO->setVendorUid("/uuid/...");
-    $smartDeviceDTO->setDescription("MerchantName");
+    $response = $api_instance->assignDeviceToRouting("SRT_...","SDV_...");
 
-    $response = $api_instance->addDevice($smartDeviceDTO);
+    print_r($response);
+
+    $response = $api_instance->assignDeviceToRouting("SRT_...","SDV_...");
 
     print_r($response);
 
