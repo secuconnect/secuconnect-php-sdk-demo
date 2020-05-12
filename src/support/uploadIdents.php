@@ -2,7 +2,7 @@
 
 namespace Secuconnect\Demo;
 
-require __DIR__ . '/../../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 use Exception;
 use Secuconnect\Client\Api\DocumentUploadsApi;
@@ -26,7 +26,7 @@ try {
     $data->setContent(
         base64_encode(
             file_get_contents(
-                __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'LICENSE'
+                __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'LICENSE'
             )
         )
     );
