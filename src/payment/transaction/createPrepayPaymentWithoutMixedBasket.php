@@ -32,9 +32,13 @@ try {
     $transaction->setRedirectUrl(new SecupayRedirectUrl());
 
     // See src/payment/customer/createCustomer.php for details
-    $transaction->setCustomer(new PaymentCustomersProductModel([
-        'id' => 'PCU_3092RR0DB2NBEE6FN0ZAVFYEJZEYAW'
-    ]));
+    $transaction->setCustomer(
+        new PaymentCustomersProductModel(
+            [
+                'id' => 'PCU_3092RR0DB2NBEE6FN0ZAVFYEJZEYAW'
+            ]
+        )
+    );
 
     $basketItem1 = new SecupayBasketItem();
     $basketItem1->setItemType('shipping');
@@ -52,10 +56,12 @@ try {
     $basketItem2->setTotal(2000);
     $basketItem2->setPrice(1000);
 
-    $transaction->setBasket([
-        $basketItem1,
-        $basketItem2
-    ]);
+    $transaction->setBasket(
+        [
+            $basketItem1,
+            $basketItem2
+        ]
+    );
 
     $api_instance = new PaymentSecupayPrepaysApi();
     $response = $api_instance->paymentSecupayprepaysPost($transaction);
@@ -134,7 +140,6 @@ try {
      *         )
      * )
      */
-
 } catch (ApiException $e) {
     echo $e->getTraceAsString();
     print_r($e->getResponseBody());

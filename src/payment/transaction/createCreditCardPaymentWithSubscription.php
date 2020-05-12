@@ -9,7 +9,6 @@ use Secuconnect\Client\Api\PaymentSecupayCreditcardsApi;
 use Secuconnect\Client\ApiException;
 use Secuconnect\Client\Authentication\Authenticator;
 use Secuconnect\Client\Model\PaymentCustomersProductModel;
-use Secuconnect\Client\Model\SecupayBasketItem;
 use Secuconnect\Client\Model\SecupayRedirectUrl;
 use Secuconnect\Client\Model\SecupayTransactionProductDTO;
 use Secuconnect\Client\Model\SecupayTransactionProductDTOOptData;
@@ -32,20 +31,28 @@ try {
     $transaction->setRedirectUrl(new SecupayRedirectUrl());
 
     // See src/payment/customer/createCustomer.php for details
-    $transaction->setCustomer(new PaymentCustomersProductModel([
-        'id' => 'PCU_3J2ZD5H8S2N4BCYCN0ZAV3W80X4YAH'
-    ]));
+    $transaction->setCustomer(
+        new PaymentCustomersProductModel(
+            [
+                'id' => 'PCU_3J2ZD5H8S2N4BCYCN0ZAV3W80X4YAH'
+            ]
+        )
+    );
 
     // Activate the option to reuse the payment transaction (subscription / recurring payment)
-    $transaction->setSubscription(new SecupayTransactionProductDTOSubscription([
-        'purpose' => 'Payment for www.example.com'
-    ]));
+    $transaction->setSubscription(
+        new SecupayTransactionProductDTOSubscription(
+            [
+                'purpose' => 'Payment for www.example.com'
+            ]
+        )
+    );
 
     $api_instance = new PaymentSecupayCreditcardsApi();
     $response = $api_instance->paymentSecupaycreditcardsPost($transaction);
 
     print_r($response);
-    
+
     /*
      * Sample output:
      * ==============
@@ -121,7 +128,6 @@ try {
 
         // Open the payment iframe
         echo 'The payer needs to open this URL: ' . $response->getRedirectUrl()->getIframeUrl() . PHP_EOL;
-
         /*
          * Sample output:
          * ==============
@@ -144,22 +150,29 @@ try {
     $transaction2->setCurrency('EUR');
 
     // Add the customer (id) which you have created before
-    $transaction2->setCustomer(new PaymentCustomersProductModel([
-        'id' => 'PCU_3J2ZD5H8S2N4BCYCN0ZAV3W80X4YAH'
-    ]));
+    $transaction2->setCustomer(
+        new PaymentCustomersProductModel(
+            [
+                'id' => 'PCU_3J2ZD5H8S2N4BCYCN0ZAV3W80X4YAH'
+            ]
+        )
+    );
 
     // Optional: Define the contract (to which merchant belongs the payment transaction) using the ID:
 //    $transaction2->setContract('PCR_3AYQR6T272M83WTYX75XU8CZNM8UA7');
 
     // Activate the option to reuse the payment transaction
-    $transaction2->setSubscription(new SecupayTransactionProductDTOSubscription([
-        'id' => 1299
-    ]));
+    $transaction2->setSubscription(
+        new SecupayTransactionProductDTOSubscription(
+            [
+                'id' => 1299
+            ]
+        )
+    );
     $api_instance2 = new PaymentSecupayCreditcardsApi();
     $response2 = $api_instance2->paymentSecupaycreditcardsPost($transaction2);
 
     print_r($response2);
-    
     /*
      * Sample output:
      * ==============
@@ -233,7 +246,6 @@ try {
      *         )
      * )
      */
-
 } catch (ApiException $e) {
     echo $e->getTraceAsString();
     print_r($e->getResponseBody());

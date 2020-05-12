@@ -44,7 +44,6 @@ try {
     if ($response->getCount() > 1) {
         echo 'WARNING: there was more than one customer found.';
     }
-
     /*
      * Sample output:
      * ==============

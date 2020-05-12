@@ -4,8 +4,11 @@ namespace Secuconnect\Demo;
 
 require __DIR__ . '/../../../vendor/autoload.php';
 
+use Exception;
+use Secuconnect\Client\Api\PaymentSecupayPayoutApi;
 use Secuconnect\Client\ApiException;
 use Secuconnect\Client\Authentication\Authenticator;
+use Secuconnect\Client\Model\PaymentCustomersProductModel;
 use Secuconnect\Client\Model\SecupayPayoutDTO;
 use Secuconnect\Client\Model\SecupayRedirectUrl;
 use Secuconnect\Client\Model\SecupayTransactionListItem;
@@ -17,7 +20,6 @@ try {
     );
 
     $transaction = new SecupayPayoutDTO();
-    $transaction->setDemo(false);
     $transaction->setCurrency('EUR');
     $transaction->setContract('PCR_2MK6EM4NE2N72XCGN0ZAV5207TH9AY');
 
@@ -28,7 +30,7 @@ try {
     $transaction->setOrderId('201900123');
 
     // See src/payment/createCustomer.php if you want to know how you can create a payment customer id
-    $transaction->setCustomer('PCU_WK2DUNC8U2N72XBV70ZAV5207TH9AH');
+    $transaction->setCustomer(new PaymentCustomersProductModel(['id' => 'PCU_WK2DUNC8U2N72XBV70ZAV5207TH9AH']));
 
     $listItem1 = new SecupayTransactionListItem();
     $listItem1->setReferenceId('2000.1');
@@ -48,11 +50,13 @@ try {
     $listItem3->setTransactionId('PCI_DSVJBYCJG9X0GBMV8JCXMH4A28KKN8');
     $listItem3->setTotal(50); // in euro-cent
 
-    $transaction->setTransactionList([
-        $listItem1,
-        $listItem2,
-        $listItem3
-    ]);
+    $transaction->setTransactionList(
+        [
+            $listItem1,
+            $listItem2,
+            $listItem3
+        ]
+    );
 
     // calculate the amount
     $amount = 0;
@@ -61,11 +65,10 @@ try {
     }
     $transaction->setAmount($amount); // in euro-cent
 
-    $api_instance = new \Secuconnect\Client\Api\PaymentSecupayPayoutApi();
+    $api_instance = new PaymentSecupayPayoutApi();
     $response = $api_instance->paymentSecupaypayoutPost($transaction);
 
     print_r($response);
-
     /*
      * Sample output:
      * ==============
@@ -130,7 +133,6 @@ try {
      *         )
      * )
      */
-
 } catch (ApiException $e) {
     echo $e->getTraceAsString();
     print_r($e->getResponseBody());
@@ -140,5 +142,5 @@ try {
         $supportId = ' Support-ID: ' . $e->getResponseBody()->supportId;
     }
 
-    throw new \Exception('Request was not successful, check the log for details.' . $supportId);
+    throw new Exception('Request was not successful, check the log for details.' . $supportId);
 }

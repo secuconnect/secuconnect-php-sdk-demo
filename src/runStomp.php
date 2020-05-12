@@ -4,9 +4,10 @@ namespace Secuconnect\Demo;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use Exception;
 use Secuconnect\Client\ApiException;
 use Secuconnect\Client\Authentication\Authenticator;
-use Secuconnect\Client\STOMP\Comunication\StompComunicationController;
+use Secuconnect\Client\STOMP\Communication\StompCommunicationController;
 
 try {
 
@@ -27,7 +28,7 @@ try {
         '/vendor/.../uuid/...'
     ]);
 
-    $StompComunicationController = new StompComunicationController();
+    $StompComunicationController = new StompCommunicationController();
     $StompComunicationController->run();
 } catch (ApiException $e) {
     var_dump($e->getResponseBody());
@@ -37,5 +38,5 @@ try {
         $supportId = ' Support-ID: ' . $e->getResponseBody()->supportId;
     }
 
-    throw new \Exception('Request was not successful, check the log for details.' . $supportId);
+    throw new Exception('Request was not successful, check the log for details.' . $supportId);
 }

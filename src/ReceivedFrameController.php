@@ -2,7 +2,9 @@
 
 namespace Secuconnect\Demo;
 
-class ReceivedFrameController implements \Secuconnect\Client\STOMP\Comunication\ReceivedFrameControllerInterface
+use Secuconnect\Client\STOMP\Communication\ReceivedFrameControllerInterface;
+
+class ReceivedFrameController implements ReceivedFrameControllerInterface
 {
     public function process($frame)
     {

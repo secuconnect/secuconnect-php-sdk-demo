@@ -35,9 +35,13 @@ try {
     $transaction->setContract('PCR_XJH365T7S2N630M7T3H58CF8HF9AAH');
 
     // See src/payment/customer/createCustomer.php for details
-    $transaction->setCustomer(new PaymentCustomersProductModel([
-        'id' => 'PCU_3R3SSQEF22N6UGGZ70ZAV938Z8UKAW'
-    ]));
+    $transaction->setCustomer(
+        new PaymentCustomersProductModel(
+            [
+                'id' => 'PCU_3R3SSQEF22N6UGGZ70ZAV938Z8UKAW'
+            ]
+        )
+    );
 
     $basketItem1 = new SecupayBasketItem();
     $basketItem1->setItemType('shipping');
@@ -62,17 +66,18 @@ try {
     $basketItem3->setName('Platform Provision');
     $basketItem3->setTotal(300);
 
-    $transaction->setBasket([
-        $basketItem1,
-        $basketItem2,
-        $basketItem3
-    ]);
+    $transaction->setBasket(
+        [
+            $basketItem1,
+            $basketItem2,
+            $basketItem3
+        ]
+    );
 
     $api_instance = new PaymentSecupayPrepaysApi();
     $response = $api_instance->paymentSecupayprepaysPost($transaction);
 
     print_r($response);
-
 } catch (ApiException $e) {
     echo $e->getTraceAsString();
     print_r($e->getResponseBody());

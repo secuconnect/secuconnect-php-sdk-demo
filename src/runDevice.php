@@ -4,6 +4,8 @@ namespace Secuconnect\Demo;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use Exception;
+use Secuconnect\Client\Api\GeneralMerchantsApi;
 use Secuconnect\Client\Api\SmartTransactionsApi;
 use Secuconnect\Client\ApiException;
 use Secuconnect\Client\Authentication\Authenticator;
@@ -31,7 +33,7 @@ try {
 //    $api_instance = new \Secuconnect\Client\Api\GeneralCo;
 
 
-    $api_instance = new \Secuconnect\Client\Api\GeneralMerchantsApi();
+    $api_instance = new GeneralMerchantsApi();
     var_dump('Access-Token: ' . $api_instance->getApiClient()->getConfig()->getAccessToken());
     var_dump($api_instance->getAll(1));
 
@@ -52,14 +54,14 @@ try {
     $prod1->setReferenceId("1000");
     $prod1->setDesc("Order #1");
     $prod1->setContractId("GCR_...");
-    $prod1->setSubBasket(array($subBasket1));
+    $prod1->setSubBasket([$subBasket1]);
     $prod1->setQuantity(1);
     $prod1->setPriceOne(60);
     $prod1->setSum(60);
     $prod1->setTax(0);
 
     $SmartTransactionsBasket = new SmartTransactionsBasket();
-    $SmartTransactionsBasket->setProducts(array($prod1));
+    $SmartTransactionsBasket->setProducts([$prod1]);
 
 
     $SmartTransactionsDTO = new SmartTransactionsDTO();
@@ -76,7 +78,7 @@ try {
 
     print_r($createdTransaction);
 
-    $api->startTransaction($createdTransaction->getId(), 'cashless');
+    $api->startTransaction($createdTransaction->getId(), 'cashless', null);
 
 } catch (ApiException $e) {
     var_dump($e->getResponseBody());
@@ -86,5 +88,5 @@ try {
         $supportId = ' Support-ID: ' . $e->getResponseBody()->supportId;
     }
 
-    throw new \Exception('Request was not successful, check the log for details.' . $supportId);
+    throw new Exception('Request was not successful, check the log for details.' . $supportId);
 }

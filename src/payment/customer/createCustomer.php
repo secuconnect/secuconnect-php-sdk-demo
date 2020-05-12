@@ -96,7 +96,6 @@ try {
      *         )
      * )
      */
-
 } catch (ApiException $e) {
     echo $e->getTraceAsString();
     print_r($e->getResponseBody());

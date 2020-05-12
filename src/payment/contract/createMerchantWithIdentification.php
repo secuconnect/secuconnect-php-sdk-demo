@@ -14,7 +14,6 @@ use Secuconnect\Client\Model\PaymentContractsDTORequestId;
 use Secuconnect\Client\Model\PaymentInformation;
 
 try {
-
     // Authenticate against the API
     Authenticator::authenticateByClientCredentials(
         '...',
@@ -79,7 +78,6 @@ try {
     $response = $api_instance->requestId('me', $request_data); //"me" is a shortcut for the current contract of the API-user
 
     print_r($response);
-
 } catch (ApiException $e) {
     echo $e->getTraceAsString();
     print_r($e->getResponseBody());

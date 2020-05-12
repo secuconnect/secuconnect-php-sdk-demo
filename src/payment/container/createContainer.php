@@ -6,15 +6,11 @@ require __DIR__ . '/../../../vendor/autoload.php';
 
 use Exception;
 use Secuconnect\Client\Api\PaymentContainersApi;
-use Secuconnect\Client\Api\PaymentCustomersApi;
 use Secuconnect\Client\ApiException;
 use Secuconnect\Client\Authentication\Authenticator;
-use Secuconnect\Client\Model\Address;
-use Secuconnect\Client\Model\Contact;
+use Secuconnect\Client\Model\BankAccountDescriptor;
 use Secuconnect\Client\Model\PaymentContainersDTO;
 use Secuconnect\Client\Model\PaymentContainersDTOCustomer;
-use Secuconnect\Client\Model\PaymentContainersDTOPrivate;
-use Secuconnect\Client\Model\PaymentCustomersDTO;
 
 try {
     Authenticator::authenticateByClientCredentials(
@@ -26,20 +22,27 @@ try {
     $container = new PaymentContainersDTO();
     $container
         ->setType('bank_account') // optional "bank_account"
-        ->setCustomer(new PaymentContainersDTOCustomer([
-            'id' => 'PCU_...']))  // from "src/payment/customer/createCustomer.php"
-        ->setPrivate(new PaymentContainersDTOPrivate([
-                'owner' => "John Doe",
-                'iban' => 'DE37503240001000000524',
-                'bic' => 'FTSBDEFAXXX'
-            ]))
-    ;
+        ->setCustomer(
+            new PaymentContainersDTOCustomer(
+                [
+                    'id' => 'PCU_...'
+                ]
+            )
+        )  // from "src/payment/customer/createCustomer.php"
+        ->setPrivate(
+            new BankAccountDescriptor(
+                [
+                    'owner' => "John Doe",
+                    'iban' => 'DE37503240001000000524',
+                    'bic' => 'FTSBDEFAXXX'
+                ]
+            )
+        );
 
     $api_instance = new PaymentContainersApi();
     $response = $api_instance->paymentContainersPost($container);
 
     print_r($response);
-    
     /*
      * Secuconnect\Client\Model\PaymentContainersProductModel Object
      * (
@@ -98,7 +101,6 @@ try {
      *         )
      * )
      */
-
 } catch (ApiException $e) {
     echo $e->getTraceAsString();
     print_r($e->getResponseBody());

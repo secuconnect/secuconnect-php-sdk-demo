@@ -32,9 +32,13 @@ try {
     $transaction->setRedirectUrl(new SecupayRedirectUrl());
 
     // See src/payment/customer/createCustomer.php for details
-    $transaction->setCustomer(new PaymentCustomersProductModel([
-        'id' => 'PCU_3R3SSQEF22N6UGGZ70ZAV938Z8UKAW'
-    ]));
+    $transaction->setCustomer(
+        new PaymentCustomersProductModel(
+            [
+                'id' => 'PCU_3R3SSQEF22N6UGGZ70ZAV938Z8UKAW'
+            ]
+        )
+    );
 
     $subTransactionForSubContract = new SecupayBasketItem();
     $subTransactionForSubContract->setItemType('sub_transaction');
@@ -64,21 +68,24 @@ try {
     $basketItem3->setName('Platform Provision');
     $basketItem3->setTotal(300);
 
-    $subTransactionForSubContract->setSubBasket([
-        $basketItem1,
-        $basketItem2,
-        $basketItem3
-    ]);
+    $subTransactionForSubContract->setSubBasket(
+        [
+            $basketItem1,
+            $basketItem2,
+            $basketItem3
+        ]
+    );
 
-    $transaction->setBasket([
-        $subTransactionForSubContract
-    ]);
+    $transaction->setBasket(
+        [
+            $subTransactionForSubContract
+        ]
+    );
 
     $api_instance = new PaymentSecupayPrepaysApi();
     $response = $api_instance->paymentSecupayprepaysPost($transaction);
 
     print_r($response);
-
 } catch (ApiException $e) {
     echo $e->getTraceAsString();
     print_r($e->getResponseBody());

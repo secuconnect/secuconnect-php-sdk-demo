@@ -8,7 +8,6 @@ use Exception;
 use Secuconnect\Client\Api\PaymentSecupayPrepaysApi;
 use Secuconnect\Client\ApiException;
 use Secuconnect\Client\Authentication\Authenticator;
-use Secuconnect\Client\Configuration;
 use Secuconnect\Client\Model\SecupayTransactionReverseAccrualDTO;
 
 try {
@@ -98,7 +97,6 @@ try {
      *         )
      * )
      */
-
 } catch (ApiException $e) {
     echo $e->getTraceAsString();
     print_r($e->getResponseBody());
