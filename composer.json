@@ -4,10 +4,10 @@
     "license": "Apache-2.0",
 
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.4",
         "ext-json": "*",
         "ext-curl": "*",
-        "secuconnect/secuconnect-php-sdk": "^2.1"
+        "secuconnect/secuconnect-php-sdk": "^2.8"
     },
 
     "autoload": {
