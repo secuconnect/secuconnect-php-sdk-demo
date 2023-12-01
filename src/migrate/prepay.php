@@ -1,4 +1,4 @@
-prepay.php<?php
+<?php
 /** @noinspection PhpUnhandledExceptionInspection */
 
 require __DIR__ . '/init.php';
@@ -16,6 +16,7 @@ use Secuconnect\Client\Model\SmartTransactionsBasketInfo;
 use Secuconnect\Client\Model\SmartTransactionsDTO;
 use Secuconnect\Client\Model\SmartTransactionsPrepare;
 
+$stx_id = null;
 try {
     $contact = new Contact();
     $contact->setSalutation('Mr.');
@@ -82,18 +83,41 @@ try {
      * Sample output:
      * ==============
      * Created secupay prepay transaction with id: STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK
-     * prepay data: {
-     * ...
+     * Prepay data: {
+     *     ...
+     *     "status": "created",
+     *     "id": "STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK"
+     * }
      */
+
     $prepay = (new SmartTransactionsApi())->startTransaction($prepay->getId(), 'prepaid', new SmartTransactionsPrepare());
 
     if ($prepay->getId() && $prepay->getStatus() === 'pending') {
+        $stx_id = $prepay->getId();
         echo 'Completed secupay prepay transaction with id: ' . $prepay->getId() . "\n";
         echo 'Prepay data: ' . print_r($prepay->__toString(), true) . "\n";
     } else {
         echo 'Prepay prepare failed' . "\n";
         exit;
     }
+    /*
+     * Sample output:
+     * ==============
+     * Created secupay prepay transaction with id: STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK
+     * Prepay data: {
+     *     ...
+     *     "status": "pending",
+     *     "payment_instructions": {
+     *         "girocode_url": "https:\/\/connect-testing.secupay-ag.de\/qr\/epc?stx=STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK",
+     *         "iban": "DE81850400611005523759",
+     *         "bic": "COBADEFFXXX",
+     *         "owner": "secupay AG",
+     *         "bankname": "Commerzbank CC",
+     *         "purpose": "TA 110147330"
+     *     },
+     *     "id": "STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK"
+     * }
+     */
 } catch (ApiException $e) {
     echo $e->getTraceAsString();
     print_r($e->getResponseBody());

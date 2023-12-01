@@ -36,7 +36,7 @@ try {
 
     $project = new PaymentContractsDTORequestId();
     $project->setContact($contact);
-    $project->setProject('Feuerwerk 2023/2024');
+    $project->setProject('Feuerwerk 2023/2024 [ID ' . time() . ']'); // must be unique
     $project->setPayoutPurpose('Auszahlung deines Projekts: Feuerwerk 2023/2024');
 
     $bank_account = new PaymentInformation();
@@ -68,7 +68,16 @@ try {
      * ==============
      * Created project with id: GCR_90YFZP3Q545BEHVFPQZWE769W20WOW
      * Project data: {
-     * ...
+     *     "contract": {
+     *         "id": "GCR_8PBB9DXYS7A7V8CP3G6PM4G9W20JO2"
+     *     },
+     *     ...
+     *     "payin_account": {
+     *         "iban": "DE89850400611005506640",
+     *         "bic": "COBADEFFXXX",
+     *         "owner": "secupay AG"
+     *     }
+     * }
      */
 } catch (ApiException $e) {
     echo $e->getTraceAsString();

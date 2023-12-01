@@ -84,7 +84,14 @@ try {
      * ==============
      * Created secupay creditcard transaction with id: STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK
      * Creditcard data: {
-     * ...
+     *     ...
+     *     "status": "created",
+     *     "payment_links": {
+     *         "creditcard": "https:\/\/pay-dev.secuconnect.com?payment-method=creditcard&stx=STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK&contract=GCR_2H69XY35227V2VKP9WRA3SJ0W95RP0&server=testing",
+     *         "general": "https:\/\/pay-dev.secuconnect.com?stx=STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK&contract=GCR_2H69XY35227V2VKP9WRA3SJ0W95RP0&server=testing"
+     *     },
+     *     "id": "STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK"
+     * }
      * Checkout-Link: https://pay-dev.secuconnect.com?payment-method=creditcard&stx=STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK&contract=GCR_2H69XY35227V2VKP9WRA3SJ0W95RP0&server=testing
      */
 } catch (ApiException $e) {

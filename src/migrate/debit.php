@@ -83,8 +83,15 @@ try {
      * Sample output:
      * ==============
      * Created secupay debit transaction with id: STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK
-     * debit data: {
-     * ...
+     * Debit data: {
+     *     ...
+     *     "status": "created",
+     *     "payment_links": {
+     *         "debit": "https:\/\/pay-dev.secuconnect.com?payment-method=debit&stx=STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK&contract=GCR_2H69XY35227V2VKP9WRA3SJ0W95RP0&server=testing",
+     *         "general": "https:\/\/pay-dev.secuconnect.com?stx=STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK&contract=GCR_2H69XY35227V2VKP9WRA3SJ0W95RP0&server=testing"
+     *     },
+     *     "id": "STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK"
+     * }
      * Checkout-Link: https://pay-dev.secuconnect.com?payment-method=debit&stx=STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK&contract=GCR_2H69XY35227V2VKP9WRA3SJ0W95RP0&server=testing
      */
 } catch (ApiException $e) {

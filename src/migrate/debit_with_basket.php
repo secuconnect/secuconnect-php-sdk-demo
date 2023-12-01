@@ -6,17 +6,16 @@ require __DIR__ . '/init.php';
 use Secuconnect\Client\Api\SmartTransactionsApi;
 use Secuconnect\Client\ApiException;
 use Secuconnect\Client\Model\Address;
-use Secuconnect\Client\Model\BankAccountDescriptor;
 use Secuconnect\Client\Model\Contact;
 use Secuconnect\Client\Model\PaymentContext;
 use Secuconnect\Client\Model\ProductInstanceID;
-use Secuconnect\Client\Model\SmartTransactionPaymentContainerDTO;
 use Secuconnect\Client\Model\SmartTransactionPaymentCustomerDTO;
 use Secuconnect\Client\Model\SmartTransactionsApplicationContext;
 use Secuconnect\Client\Model\SmartTransactionsApplicationContextReturnUrls;
+use Secuconnect\Client\Model\SmartTransactionsBasket;
 use Secuconnect\Client\Model\SmartTransactionsBasketInfo;
+use Secuconnect\Client\Model\SmartTransactionsBasketProduct;
 use Secuconnect\Client\Model\SmartTransactionsDTO;
-use Secuconnect\Client\Model\SmartTransactionsPrepare;
 
 try {
     $contact = new Contact();
@@ -47,10 +46,54 @@ try {
     $debit = new SmartTransactionsDTO();
     $debit->setIsDemo(true);
     $debit->setContract(new ProductInstanceID(['id' => 'GCR_2H69XY35227V2VKP9WRA3SJ0W95RP0']));
+
+    // Create basket
+    $sum = 0;
+    $pos = 1;
+    $products = [];
+
+    // Add the first item
+    $item_1 = new SmartTransactionsBasketProduct();
+    $item_1->setId($pos++);
+    $item_1->setArticleNumber('3211');
+    $item_1->setEan('4123412341243');
+    $item_1->setItemType('article');
+    $item_1->setDesc('Testname 1');
+    $item_1->setPriceOne(25);
+    $item_1->setQuantity(2);
+    $item_1->setTax(19);
+    $products[] = $item_1;
+    $sum += round(($item_1->getQuantity() ?: 1) * $item_1->getPriceOne());
+
+    // Add the shipping costs
+    $shipping = new SmartTransactionsBasketProduct();
+    $shipping->setId($pos++);
+    $shipping->setItemType('shipping');
+    $shipping->setDesc('Deutsche Post Warensendung');
+    $shipping->setPriceOne(145);
+    $shipping->setTax(19);
+    $products[] = $shipping;
+    $sum += round(($shipping->getQuantity() ?: 1) * $shipping->getPriceOne());
+
+    // add stakeholder share (the remaining amount will be transferred the contract from line 47: `$debit->setContract(...);`)
+    $stakeholder = new SmartTransactionsBasketProduct();
+    $stakeholder->setId($pos++);
+    $stakeholder->setItemType('stakeholder_payment');
+    $stakeholder->setContractId('GCR_3QCX2UMNSE87Y698A5B90GD5MZWHP7');
+    $stakeholder->setDesc('Provision Project XY');
+    $stakeholder->setSum(5);
+    $products[] = $stakeholder;
+    // (this amount will not be added to the sum (because it's not visible to the payer))
+
+    $basket = new SmartTransactionsBasket();
+    $basket->setProducts($products);
+    $debit->setBasket($basket);
+
     $basket_info = new SmartTransactionsBasketInfo();
-    $basket_info->setSum(100); // Amount in cents (or in the smallest unit of the given currency)
+    $basket_info->setSum($sum); // Amount in cents (or in the smallest unit of the given currency)
     $basket_info->setCurrency('EUR'); // The ISO-4217 code of the currency
     $debit->setBasketInfo($basket_info);
+
     $debit->setTransactionRef('Your purpose from TestShopName');
     $debit->setMerchantRef('201600123'); // The shop order id
     $debit->setCustomer($customer);
@@ -76,6 +119,7 @@ try {
     if ($debit->getId()) {
         echo 'Created secupay debit transaction with id: ' . $debit->getId() . "\n";
         echo 'Debit data: ' . print_r($debit->__toString(), true) . "\n";
+        echo 'Checkout-Link: ' . $debit->getPaymentLinks()['debit'] . "\n";
     } else {
         echo 'Debit creation failed' . "\n";
         exit;
@@ -88,39 +132,13 @@ try {
      * Debit data: {
      *     ...
      *     "status": "created",
+     *     "payment_links": {
+     *         "debit": "https:\/\/pay-dev.secuconnect.com?payment-method=debit&stx=STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK&contract=GCR_2H69XY35227V2VKP9WRA3SJ0W95RP0&server=testing",
+     *         "general": "https:\/\/pay-dev.secuconnect.com?stx=STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK&contract=GCR_2H69XY35227V2VKP9WRA3SJ0W95RP0&server=testing"
+     *     },
      *     "id": "STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK"
      * }
-     */
-
-    // add payment container
-    $prepare_data = new SmartTransactionsPrepare();
-    $container = new SmartTransactionPaymentContainerDTO();
-    $container->setType('bank_account');
-    $bank_account = new BankAccountDescriptor();
-    $bank_account->setOwner('Max Mustermann');
-    $bank_account->setIban('DE37503240001000000524');
-    $container->setPrivate($bank_account);
-    $prepare_data->setContainer($container);
-
-    $debit = (new SmartTransactionsApi())->prepare($debit->getId(), 'debit', $prepare_data);
-
-    if ($debit->getId() && $debit->getStatus() === 'ok') {
-        echo 'Completed secupay debit transaction with id: ' . $debit->getId() . "\n";
-        echo 'Debit data: ' . print_r($debit->__toString(), true) . "\n";
-    } else {
-        echo 'Debit prepare failed' . "\n";
-        exit;
-    }
-
-    /*
-     * Sample output:
-     * ==============
-     * Completed secupay debit transaction with id: STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK
-     * Debit data: {
-     *     ...
-     *     "status": "ok",
-     *     "id": "STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK"
-     * }
+     * Checkout-Link: https://pay-dev.secuconnect.com?payment-method=debit&stx=STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK&contract=GCR_2H69XY35227V2VKP9WRA3SJ0W95RP0&server=testing
      */
 } catch (ApiException $e) {
     echo $e->getTraceAsString();
