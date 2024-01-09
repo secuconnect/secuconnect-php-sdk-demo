@@ -9,6 +9,7 @@ use Secuconnect\Client\ApiException;
 use Secuconnect\Client\Authentication\Authenticator;
 use Secuconnect\Client\Cache\FileCache;
 use Secuconnect\Client\Configuration;
+use Secuconnect\Demo\Globals;
 
 try {
     // Change environment to live / testing (default is "testing")
@@ -22,12 +23,15 @@ try {
     // -> not needed anymore
 
     // Create cache storage
-    Configuration::getDefaultConfiguration()->setCache(new FileCache(__DIR__ . '/.cache'));
+    $cache_dir = __DIR__ . '/../../.cache';
+    if (!is_dir($cache_dir)) {
+        mkdir($cache_dir, 0740, true);
+    }
+    Configuration::getDefaultConfiguration()->setCache(new FileCache($cache_dir));
 
     // Set credentials
     $token = Authenticator::authenticateByClientCredentials(
-        '...',
-        '...'
+        ...Globals::OAuthClientCredentials
     );
 
     echo 'Auth token: ' . $token . "\n";
