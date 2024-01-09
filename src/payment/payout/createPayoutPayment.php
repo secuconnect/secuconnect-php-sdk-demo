@@ -2,7 +2,7 @@
 
 namespace Secuconnect\Demo;
 
-require __DIR__ . '/../../../vendor/autoload.php';
+require_once __DIR__ . '/../../../vendor/autoload.php';
 
 use Exception;
 use Secuconnect\Client\Api\PaymentSecupayPayoutApi;
@@ -15,13 +15,12 @@ use Secuconnect\Client\Model\SecupayTransactionListItem;
 
 try {
     Authenticator::authenticateByClientCredentials(
-        '...',
-        '...'
+        ...Globals::OAuthClientCredentials
     );
 
     $transaction = new SecupayPayoutDTO();
     $transaction->setCurrency('EUR');
-    $transaction->setContract('PCR_2MK6EM4NE2N72XCGN0ZAV5207TH9AY');
+    $transaction->setContract('GCR_2H69XY35227V2VKP9WRA3SJ0W95RP0');
 
     $transaction->setRedirectUrl(new SecupayRedirectUrl());
     $transaction->getRedirectUrl()->setUrlPush('https://api.example.com/secuconnect/push');
@@ -30,31 +29,31 @@ try {
     $transaction->setOrderId('201900123');
 
     // See src/payment/createCustomer.php if you want to know how you can create a payment customer id
-    $transaction->setCustomer(new PaymentCustomersProductModel(['id' => 'PCU_WK2DUNC8U2N72XBV70ZAV5207TH9AH']));
+    $transaction->setCustomer(new PaymentCustomersProductModel(['id' => 'PCU_W8X56E8Q52PCRUUAHVFVJ9970CMPAJ']));
 
     $listItem1 = new SecupayTransactionListItem();
     $listItem1->setReferenceId('2000.1');
-    $listItem1->setName('Payout Purpose 1');
-    $listItem1->setTransactionHash('hppbfplzdkzy3472363');
+    $listItem1->setName('Payout via transaction_hash');
+    $listItem1->setTransactionHash('fepqkzqgunfb11102198');
     $listItem1->setTotal(100); // in euro-cent
 
     $listItem2 = new SecupayTransactionListItem();
     $listItem2->setReferenceId('2000.2');
-    $listItem2->setName('Payout Purpose 2');
-    $listItem2->setContainerId('PCT_2PAYNDWCE2N72XC8N0ZAV5207TH9AK');
+    $listItem2->setName('Payout via payment.containers');
+    $listItem2->setContainerId('PCT_8SU4C67WK2PB8HBJHF0838NHGZ30A4');
     $listItem2->setTotal(200); // in euro-cent
 
     $listItem3 = new SecupayTransactionListItem();
     $listItem3->setReferenceId('2000.3');
-    $listItem3->setName('Payout Purpose 3');
-    $listItem3->setTransactionId('PCI_DSVJBYCJG9X0GBMV8JCXMH4A28KKN8');
+    $listItem3->setName('Payout via payment.transactions');
+    $listItem3->setTransactionId('PCI_2U5DAY4JPVJRAAXV7FNQT248WA6AMG');
     $listItem3->setTotal(50); // in euro-cent
 
     $transaction->setTransactionList(
         [
             $listItem1,
             $listItem2,
-            $listItem3
+            $listItem3,
         ]
     );
 
@@ -77,9 +76,10 @@ try {
      *     [container:protected] => Array
      *         (
      *             [object] => payment.secupaypayout
-     *             [id] => vvvjulhaacbp3472419
-     *             [trans_id] => 14245347
-     *             [status] => authorized
+     *             [id] => qqtcpqsspaph11102243
+     *             [trans_id] => 110152037
+     *             [payment_id] => PCI_5CZSUXGCBX9QUXZPDZHFC248WA8WMN
+     *             [status] => pending
      *             [amount] => 350
      *             [currency] => EUR
      *             [purpose] => Payout Test #1
@@ -93,8 +93,8 @@ try {
      *                                 (
      *                                     [item_type] => transaction_payout
      *                                     [reference_id] => 2000.1
-     *                                     [name] => Payout Purpose 1
-     *                                     [transaction_hash] => hppbfplzdkzy3472363
+     *                                     [name] => Payout via transaction_hash
+     *                                     [transaction_hash] => fepqkzqgunfb11102198
      *                                     [total] => 100
      *                                 )
      *                         )
@@ -104,8 +104,8 @@ try {
      *                                 (
      *                                     [item_type] => transaction_payout
      *                                     [reference_id] => 2000.2
-     *                                     [name] => Payout Purpose 2
-     *                                     [container_id] => PCT_2PAYNDWCE2N72XC8N0ZAV5207TH9AK
+     *                                     [name] => Payout via payment.containers
+     *                                     [container_id] => PCT_8SU4C67WK2PB8HBJHF0838NHGZ30A4
      *                                     [total] => 200
      *                                 )
      *                         )
@@ -114,20 +114,20 @@ try {
      *                             [container:protected] => Array
      *                                 (
      *                                     [item_type] => transaction_payout
-     *                                     [reference_id] => 2000.2
-     *                                     [name] => Payout Purpose 2
-     *                                     [transaction_id] => PCI_DSVJBYCJG9X0GBMV8JCXMH4A28KKN8
+     *                                     [reference_id] => 2000.3
+     *                                     [name] => Payout via payment.transactions
+     *                                     [transaction_id] => PCI_2U5DAY4JPVJRAAXV7FNQT248WA6AMG
      *                                     [total] => 50
      *                                 )
      *                         )
      *                 )
-     *             [transfer_purpose] => TA 14245347
+     *             [transfer_purpose] => TA 110152037
      *             [transfer_account] => Secuconnect\Client\Model\PaymentInformation Object
      *                 (
      *                     [container:protected] => Array
      *                         (
-     *                             [iban] => DE88300500000001747013
-     *                             [bic] => WELADEDDXXX
+     *                             [iban] => DE81850400611005523759
+     *                             [bic] => COBADEFFXXX
      *                         )
      *                 )
      *         )
