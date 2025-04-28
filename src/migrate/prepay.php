@@ -108,7 +108,7 @@ try {
      *     ...
      *     "status": "pending",
      *     "payment_instructions": {
-     *         "girocode_url": "https:\/\/connect-testing.secupay-ag.de\/qr\/epc?stx=STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK",
+     *         "girocode_url": "https:\/\/connect-testing.secuconnect.com\/qr\/epc?stx=STX_WC3HTTY372PAYSVPVCN9ZM5R0YM9AK",
      *         "iban": "DE81850400611005523759",
      *         "bic": "COBADEFFXXX",
      *         "owner": "secupay AG",

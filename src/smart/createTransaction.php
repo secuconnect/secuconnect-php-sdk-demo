@@ -16,8 +16,8 @@ use Secuconnect\Client\Model\SmartTransactionsBasketProduct;
 use Secuconnect\Client\Model\SmartTransactionsDTO;
 
 try {
-    Configuration::getDefaultConfiguration()->setHost('https://connect-testing.secupay-ag.de/api/v2');
-    Configuration::getDefaultConfiguration()->setAuthHost('https://connect-testing.secupay-ag.de/');
+    Configuration::getDefaultConfiguration()->setHost('https://connect-testing.secuconnect.com/api/v2');
+    Configuration::getDefaultConfiguration()->setAuthHost('https://connect-testing.secuconnect.com/');
 
     Authenticator::authenticateByClientCredentials(...[
         '...',

@@ -62,8 +62,8 @@ try {
         ];
     } else {
         // (optional, as "testing" is already the default)
-        Configuration::getDefaultConfiguration()->setHost('https://connect-testing.secupay-ag.de/api/v2'); // demo server
-        Configuration::getDefaultConfiguration()->setAuthHost('https://connect-testing.secupay-ag.de/'); // demo server
+        Configuration::getDefaultConfiguration()->setHost('https://connect-testing.secuconnect.com/api/v2'); // demo server
+        Configuration::getDefaultConfiguration()->setAuthHost('https://connect-testing.secuconnect.com/'); // demo server
         $credentials = Globals::OAuthClientCredentials;
     }
 

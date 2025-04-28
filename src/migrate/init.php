@@ -13,10 +13,10 @@ use Secuconnect\Demo\Globals;
 
 try {
     // Change environment to live / testing (default is "testing")
-    Configuration::getDefaultConfiguration()->setHost('https://connect-testing.secupay-ag.de/api/v2'); // demo server
+    Configuration::getDefaultConfiguration()->setHost('https://connect-testing.secuconnect.com/api/v2'); // demo server
 //    Configuration::getDefaultConfiguration()->setHost('https://connect.secucard.com/api/v2'); // live
 
-    Configuration::getDefaultConfiguration()->setAuthHost('https://connect-testing.secupay-ag.de/'); // demo server
+    Configuration::getDefaultConfiguration()->setAuthHost('https://connect-testing.secuconnect.com/'); // demo server
 //    Configuration::getDefaultConfiguration()->setAuthHost('https://connect.secucard.com/'); // live
 
     // Create logger

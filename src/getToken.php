@@ -11,8 +11,8 @@ use Secuconnect\Client\Configuration;
 
 try {
     // Change environment to "testing" (which is the default in the SDK)
-    Configuration::getDefaultConfiguration()->setHost('https://connect-testing.secupay-ag.de/api/v2');
-    Configuration::getDefaultConfiguration()->setAuthHost('https://connect-testing.secupay-ag.de/');
+    Configuration::getDefaultConfiguration()->setHost('https://connect-testing.secuconnect.com/api/v2');
+    Configuration::getDefaultConfiguration()->setAuthHost('https://connect-testing.secuconnect.com/');
 
     // Change environment to "live"
 //    Configuration::getDefaultConfiguration()->setHost('https://connect.secucard.com/api/v2');

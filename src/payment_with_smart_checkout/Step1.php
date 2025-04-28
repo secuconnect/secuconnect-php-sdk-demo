@@ -20,8 +20,8 @@ class Step1
     {
         try {
             // init env
-            Configuration::getDefaultConfiguration()->setHost('https://connect-testing.secupay-ag.de/api/v2');
-            Configuration::getDefaultConfiguration()->setAuthHost('https://connect-testing.secupay-ag.de/');
+            Configuration::getDefaultConfiguration()->setHost('https://connect-testing.secuconnect.com/api/v2');
+            Configuration::getDefaultConfiguration()->setAuthHost('https://connect-testing.secuconnect.com/');
 
             // enable for using the live environment
 //            Configuration::getDefaultConfiguration()->setHost('https://connect.secucard.com/api/v2');
